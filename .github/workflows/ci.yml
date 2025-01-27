@@ -1,0 +1,41 @@
+name: Mon Workflow CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout le code du repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Docker pour builder l'image
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+        # 3. Build l'image Docker
+      - name: Build Docker Image
+        run: |
+          docker build \
+            --file ./api/Dockerfile \
+            --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
+
+      # Connexion sur le VPS et récupération de l'image Docker
+      - uses: actions/checkout@v2
+      - name: Déploiement sur VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_IMAGE }}
+            docker run ${{ secrets.DOCKER_IMAGE }}
+      
