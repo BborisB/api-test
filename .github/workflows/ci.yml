@@ -20,15 +20,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-        # 3. Build l'image Docker
-      - name: Build Docker Image
+        # 3. Build et Push l'image Docker
+      - name: Build and push Docker Image
         run: |
           docker build \
             --file ./api/Dockerfile \
             --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
+          docker push your-dockerhub-username/your-image-name:latest
 
       # Connexion sur le VPS et récupération de l'image Docker
-      - uses: actions/checkout@v2
       - name: Déploiement sur VPS
         uses: appleboy/ssh-action@master
         with:
