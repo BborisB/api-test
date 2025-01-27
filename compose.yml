@@ -1,0 +1,21 @@
+services:
+  api:
+    image: node:22.13.1-alpine3.21
+    container_name: api
+    volumes:
+      - ./:/api
+    ports:
+      - 3000:3000
+    command: npm run start:dev
+    working_dir: /api
+
+  api-create:
+    image: node:22.13.1-alpine3.21
+    container_name: api-create
+    volumes:
+      - ./:/api
+    ports:
+      - 3000:3000
+    command: sh -c "npm install -g @nestjs/cli && nest new -p npm --strict api"
+    working_dir: /
+    
