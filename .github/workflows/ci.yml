@@ -27,16 +27,7 @@ jobs:
           docker build --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
-      # 4. Copy docker-compose.yml to VPS
-      - name: Copy docker-compose.yml
-        uses: appleboy/scp-action@v0.1.2
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          source: ./docker-compose.yml
-          target: /api/docker-compose.yml
+      
 
       # 5. Deploy services
       - name: Deploy services
