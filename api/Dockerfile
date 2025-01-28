@@ -28,7 +28,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/package*.json ./
 
 # Exposer le port sur lequel tourne l'API
-EXPOSE 3000
+EXPOSE 9014
 
 # Commande pour démarrer l'application
 CMD ["node", "dist/main.js"]
