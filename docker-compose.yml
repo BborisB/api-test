@@ -34,10 +34,10 @@ services:
   # Configuration de NGINX en dev
   nginx-prod:
     image: nginx:latest
-    container_name: nginx-dev
+    container_name: nginx-prod
     ports:
       - "80:9014" # Expose le port 80 de NGINX sur le port 8080 de l'hôte
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro # Monte la configuration NGINX
     depends_on:
-      - api-dev
+      - api-prod
