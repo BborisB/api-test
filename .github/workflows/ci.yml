@@ -27,7 +27,7 @@ jobs:
           docker build --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
-      # 4. Suppression du docker-compose existant
+      # 4. Suppression du docker-compose et du nginx.conf existant
       - name: Deploy services
         uses: appleboy/ssh-action@v0.1.7
         with:
@@ -37,6 +37,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             rm -f ~api/docker-compose.yml
+            rm -f ~api/nginx.prod.conf
 
       # 5. Copy docker-compose.yml sur le VPS
       - name: Copy docker-compose.yml
@@ -49,7 +50,7 @@ jobs:
           source: ./docker-compose.yml
           target: ~/api
 
-      # 6. Copy docker-compose.yml sur le VPS
+      # 6. Copy nginx.prod.conf sur le VPS
       - name: Copy nginx.prod.conf
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -58,7 +59,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
           source: ./nginx/nginx.prod.conf
-          target: ~/nginx
+          target: ~/api
 
       # 7. Deploy services
       - name: Deploy services
