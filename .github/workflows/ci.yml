@@ -38,7 +38,7 @@ jobs:
           script: |
             rm -f ~api/docker-compose.yml
 
-      # 5. Copy docker-compose.yml to VPS
+      # 5. Copy docker-compose.yml sur le VPS
       - name: Copy docker-compose.yml
         uses: appleboy/scp-action@v0.1.7
         with:
