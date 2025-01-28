@@ -23,7 +23,8 @@ jobs:
       # 3. Build et Push l'image Docker
       - name: Build and push Docker Image
         run: |
-          docker build --file ./api/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
+          cd api
+          docker build --tag ${{ secrets.DOCKER_USERNAME }}/api:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
 
       # 4. Copy docker-compose.yml to VPS
