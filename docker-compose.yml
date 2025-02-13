@@ -51,7 +51,7 @@ services:
     image: nginx:latest
     container_name: nginx-prod
     ports:
-      - "9034:80" # Expose le port 80 de NGINX sur le port 9014 du VPS
+      - "9014:80" # Expose le port 80 de NGINX sur le port 9014 du VPS
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf:ro # Monte la configuration NGINX
     depends_on:
